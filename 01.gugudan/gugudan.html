@@ -1,0 +1,73 @@
+<html>
+  <head>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      let inputRef = React.createRef();
+
+      class GuGuDan extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            num1: Math.ceil(Math.random() * 9),
+            num2: Math.ceil(Math.random() * 9),
+            value: '',
+            result: '',
+          };
+        }
+
+        handleMultiple(firstNum, secondNum, val) {
+          firstNum * secondNum === parseInt(val)
+            ? this.setState({
+                num1: Math.ceil(Math.random() * 9),
+                num2: Math.ceil(Math.random() * 9),
+                value: val,
+                result: '정답입니다! :)',
+              })
+            : this.setState({
+                value: '',
+                result: '틀렸습니다! :(',
+              });
+        }
+
+        render() {
+          return (
+            <div>
+              <h3>
+                {this.state.num1}곱하기 {this.state.num2}는?
+              </h3>
+              <form>
+                <input type='number' ref={inputRef} />
+                <button
+                  onClick={() =>
+                    this.handleMultiple(
+                      this.state.num1,
+                      this.state.num2,
+                      inputRef.current.value
+                    )
+                  }
+                >
+                  입력
+                </button>
+              </form>
+              <div>결과는: {this.state.result}</div>
+            </div>
+          );
+        }
+      }
+    </script>
+    <script type="text/babel">
+      ReactDOM.render(<GuGuDan />, document.querySelector('#root'));
+    </script>
+  </body>
+</html>
