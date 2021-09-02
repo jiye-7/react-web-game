@@ -14,48 +14,63 @@
     <div id="root"></div>
     <script type="text/babel">
       class GuGuDan extends React.Component {
-        constructor(props) {
-          super(props);
-          this.state = {
-            num1: Math.ceil(Math.random() * 9),
-            num2: Math.ceil(Math.random() * 9),
-            value: '',
-            result: '',
-          };
-        }
+        state = {
+          num1: Math.ceil(Math.random() * 9),
+          num2: Math.ceil(Math.random() * 9),
+          value: '',
+          result: '',
+          multiplyResult: '',
+        };
 
         onSubmit = (e) => {
-          this.state.num1 * this.state.num2 === parseInt(this.state.value)
-            ? this.setState({
+          e.preventDefault();
+          if (
+            this.state.num1 * this.state.num2 ===
+            parseInt(this.state.value)
+          ) {
+            this.setState((prevState) => {
+              // 예전 state 값으로 새로운 state를 만들 때에는(ex) this.state.~~가 쓰일 때) 함수를 리턴해주는 함수를 사용하는 것이 좋다.
+              // prevState: 바꾸기 전의 상태값을 다음 상태값에서 활용할 수 있다.
+              return {
                 num1: Math.ceil(Math.random() * 9),
                 num2: Math.ceil(Math.random() * 9),
                 value: '',
-                result: '딩동댕! 정답입니다. :)',
-              })
-            : this.setState({
-                value: '',
-                result: '땡! 틀렸습니다. :(',
-              });
+                result: '딩동댕! 정답입니다. :) 답: ' + prevState.value,
+              };
+            });
+            this.input.focus(); // 해당 DOM이 선택된다. === document.querySelector('input').focus();
+          } else {
+            this.setState({
+              value: '',
+              result: '땡! 틀렸습니다. :(',
+            });
+            this.input.focus();
+          }
         };
 
         onChange = (e) => this.setState({ value: e.target.value });
 
+        input; // 생략 가능
+
+        onRefInput = (inputRef) => (this.input = inputRef);
+
         render() {
           return (
-            <div>
+            <React.Fragment>
               <h3>
                 {this.state.num1}곱하기 {this.state.num2}는?
               </h3>
               <form onSubmit={this.onSubmit}>
                 <input
+                  ref={this.onRefInput}
                   type='number'
                   value={this.state.value}
                   onChange={this.onChange}
                 />
-                <button>입력</button>
+                <button type='submit'>입력</button>
               </form>
-              <div>결과는: {this.state.result}</div>
-            </div>
+              <div>{this.state.result}</div>
+            </React.Fragment>
           );
         }
       }
