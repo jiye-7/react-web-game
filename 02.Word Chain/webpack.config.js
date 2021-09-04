@@ -22,6 +22,7 @@ module.exports = {
         loader: 'babel-loader', // babel rule을 적용(test에 정의해 놓은 js, jsx 파일에 최신 문법을 호환될 수 있도록 적용)
         options: {
           presets: ['@babel/preset-env', '@babel/preset-react'],
+          plugins: [],
         },
       },
     ],
