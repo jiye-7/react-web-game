@@ -10,7 +10,6 @@ class WordChain extends Component {
 
   onSubmitForm = (e) => {
     e.preventDefault();
-    // 끝말잇기 로직
     if (this.state.word[this.state.word.length - 1] === this.state.value[0]) {
       this.setState({
         word: this.state.value,
@@ -28,7 +27,9 @@ class WordChain extends Component {
   };
 
   onChangeInput = (e) => {
-    this.setState({ value: e.target.value }); // currentTarget 차이
+    this.setState({
+      value: e.target.value,
+    });
   };
 
   onRefInput = (c) => {
@@ -48,7 +49,7 @@ class WordChain extends Component {
           />
           <button>확인</button>
         </form>
-        <div>결과는: {this.state.result}</div>
+        <div>결과: {this.state.result}</div>
       </>
     );
   }
