@@ -21,7 +21,18 @@ module.exports = {
         test: /\.jsx?/, // js파일, jsx파일에 이 룰을 적용하겠다
         loader: 'babel-loader', // babel rule을 적용(test에 정의해 놓은 js, jsx 파일에 최신 문법을 호환될 수 있도록 적용)
         options: {
-          presets: ['@babel/preset-env', '@babel/preset-react'],
+          presets: [
+            [
+              '@babel/preset-env',
+              {
+                targets: {
+                  browsers: ['> 5% in KR'],
+                },
+                debug: true,
+              },
+            ],
+            '@babel/preset-react',
+          ],
           plugins: [],
         },
       },
